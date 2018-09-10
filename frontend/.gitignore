@@ -5,6 +5,4 @@ target
 .classpath
 .project
 .scannerwork
-build
 node_modules
-public
