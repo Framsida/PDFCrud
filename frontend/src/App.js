@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './App.css';
+import Edit from "./Edit";
+import Delete from "./Delete";
+import Add from "./Add.js";
 
 class App extends Component {
     constructor(props) {
@@ -9,12 +12,17 @@ class App extends Component {
             items: []
         };
     }
-    buttonFormatter(){
-        return '<button type="button">Edit</button><button type="button" >Delete</button>';
+    buttonFormatter(cell, row){
+        console.log(this.state);
+        return (<div><Edit title={row.Title} tags={row.Tags}>Edit</Edit><Delete title={row.Title}>Delete</Delete></div>);
+
     }
-    createCustomInsertButton = (openModal) => {
+    PDFlink(){
+        return (<a href='https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdfs/PDF32000_2008.pdf' target="_blank">PDF</a>);
+    }
+    createCustomInsertButton() {
         return (
-            <button style={ { color: 'red' } } onClick={ openModal }>Add rows</button>
+            <Add>Add</Add>
         );
     }
     componentDidMount() {
@@ -32,25 +40,21 @@ class App extends Component {
                         error
                     });
             }
-            )
+         )
     }
-
-
   render() {
       const options = {
           insertBtn: this.createCustomInsertButton
       };
     return (
-        <BootstrapTable options={options} hover={true} data = {this.state.items} insertRow>
+        <BootstrapTable ref='table' options={options} hover={true} data = {this.state.items} insertRow>
                 <TableHeaderColumn width={"200"} dataField='Title' isKey>Title</TableHeaderColumn>
-                <TableHeaderColumn width={"200"} dataField='Data'>Data</TableHeaderColumn>
+                <TableHeaderColumn width={"200"} dataField='Data' dataFormat={this.PDFlink}>Data</TableHeaderColumn>
                 <TableHeaderColumn width={"200"} dataField='Tags'>Tags</TableHeaderColumn>
-            <TableHeaderColumn width={"200"} dataField='Date'>DateAdded</TableHeaderColumn>
-            <TableHeaderColumn width={"200"} dataField="button" dataFormat={this.buttonFormatter}>Buttons</TableHeaderColumn>
-
+                <TableHeaderColumn width={"200"} dataField='Date'>DateAdded</TableHeaderColumn>
+                <TableHeaderColumn width={"200"} dataField="button" dataFormat={this.buttonFormatter}>Buttons</TableHeaderColumn>
         </BootstrapTable>
     );
   }
 }
-
 export default App;

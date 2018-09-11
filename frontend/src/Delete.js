@@ -26,14 +26,14 @@ class DeleteModal extends React.Component {
 
     deletePDF() {
         axios.delete('/api/delete', {
-            data: {id: this.id}
+            data: {id: this.id},
             config: {
 
             }
         })
             .then(function () {
                 console.log("Success");
-                this.toggle;
+                //this.toggle;
             })
             .catch(e => {
                 console.log(e)

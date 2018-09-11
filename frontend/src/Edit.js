@@ -11,7 +11,7 @@ class EditModal  extends  React.Component {
         this.toggle = this.toggle.bind(this);
 
         this.title = props.title;
-
+        this.tags = props.tags;
         this.id = props.pdfId;
 
     }
@@ -26,7 +26,7 @@ class EditModal  extends  React.Component {
         axios({
             method: 'put',
             url: '/api/edit',
-            data: {id: this.id, title: this.title},
+            data: {id: this.id, title: this.title, tags: this.tags},
             config: {headers: {'Content-Type': 'multipart/form-data'}}
         })
     }
@@ -44,6 +44,8 @@ class EditModal  extends  React.Component {
                         <FormGroup>
                             <Label for="pdfTitle">Title</Label>
                             <Input type="text" name="title" id="pdfTitle" defaultValue={this.title} onChange={t => this.title = t.target.value} />
+                            <Label for="pdfTag">Tags</Label>
+                            <Input type="text" name="tags" id="pdfTag" defaultValue={this.tags} onChange={t => this.tags = t.target.value} />
                         </FormGroup>
                     </form>
                 </ModalBody>
@@ -57,4 +59,4 @@ class EditModal  extends  React.Component {
     }
 }
 
-export  default EditModal;
+export default EditModal;
