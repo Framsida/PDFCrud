@@ -9,7 +9,7 @@ var query=require("querystring");
 var app = express();
 
 // Works Outside
-// Pdfservice.addToDataBase('asdasdasd', pdfPath, 'sadasd', 'asdsd');
+// NOTE : This works on my enviroment, bits and bobs must be changed to work with the front end
 
 app.get('/', function(req, res){
     fs.readFile('testForm.html', function(err, data) {
@@ -29,6 +29,20 @@ app.post('/api/add/', function (req, res) {
         res.end();
     });
 })
+
+app.get('/viewFileWithID', function (req, res) {
+        // var fileName = req.params.id
+        var id = '5b97aa674c303f80d8a6c4c3';
+        Pdfservice.getPdfByID(id, res);
+    }
+)
+
+app.delete('/deleteFileWithID', function (req, res) {
+        var id = '5b97aa674c303f80d8a6c4c3';
+        Pdfservice.deletePdfByID(id, res);
+        res.end();
+    }
+)
 
 
 app.listen('3002');

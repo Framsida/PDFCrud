@@ -21,8 +21,23 @@ module.exports = {
             });
             fs.createReadStream(file).pipe(writestream);
         });
+    },
+    getPdfByID: function (id, res) {
+        mongoose.connect('mongodb://testing:testing1@ds151292.mlab.com:51292/devtesting');
+        var conn = mongoose.connection;
+        conn.once('open', function () {
+            var gfs = Grid(conn.db);
+            gfs.createReadStream({_id : id}).pipe(res);
+        });
+    },
+    deletePdfByID: function(id, res){
+        mongoose.connect('mongodb://testing:testing1@ds151292.mlab.com:51292/devtesting');
+        var conn = mongoose.connection;
+        conn.once('open', function () {
+            var gfs = Grid(conn.db);
+            gfs.remove({ _id: id });
+        });
     }
-
 }
 
 
