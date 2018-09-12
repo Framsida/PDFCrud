@@ -4,6 +4,8 @@ import './App.css';
 import Edit from "./Edit";
 import Delete from "./Delete";
 import Add from "./Add.js";
+import PDF from "./PDF.js";
+
 
 class App extends Component {
     constructor(props) {
@@ -18,7 +20,7 @@ class App extends Component {
 
     }
     PDFlink(){
-        return (<a href='https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdfs/PDF32000_2008.pdf' target="_blank">PDF</a>);
+        return (<PDF>PDF</PDF>);
     }
     createCustomInsertButton() {
         return (
@@ -47,7 +49,7 @@ class App extends Component {
           insertBtn: this.createCustomInsertButton
       };
     return (
-        <BootstrapTable ref='table' options={options} hover={true} data = {this.state.items} insertRow>
+        <BootstrapTable ref='table' options={options} hover={true}  data = {this.state.items} insertRow>
                 <TableHeaderColumn width={"200"} dataField='Title' isKey>Title</TableHeaderColumn>
                 <TableHeaderColumn width={"200"} dataField='Data' dataFormat={this.PDFlink}>Data</TableHeaderColumn>
                 <TableHeaderColumn width={"200"} dataField='Tags'>Tags</TableHeaderColumn>
