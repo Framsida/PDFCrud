@@ -12,6 +12,7 @@ var app = express();
 // NOTE : This works on my enviroment, bits and bobs must be changed to work with the front end
 
 app.get('/', function(req, res){
+    // for ash to test stuff do not need it
     fs.readFile('testForm.html', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(data);
@@ -30,19 +31,35 @@ app.post('/api/add/', function (req, res) {
     });
 })
 
-app.get('/viewFileWithID', function (req, res) {
-        // var fileName = req.params.id
-        var id = '5b97aa674c303f80d8a6c4c3';
-        Pdfservice.getPdfByID(id, res);
-    }
-)
+app.get('/api/viewFileWithID/:id', function (req, res) {
+    var id = req.params.id
+    Pdfservice.getPdfByID(id, res);
+})
 
-app.delete('/deleteFileWithID', function (req, res) {
-        var id = '5b97aa674c303f80d8a6c4c3';
-        Pdfservice.deletePdfByID(id, res);
-        res.end();
-    }
-)
+app.delete('/api/deleteFileWithID', function (req, res) {
+        req.on("data", function (data) {
+            form = query.parse(data.toString());
+            Pdfservice.deletePdfByID(form.id, res);
+            res.end();
+        });
+})
+
+app.get('/api/getDetails/', async function (req, res) {
+    console.log("Runnning");
+    //console.log(Pdfservice.retrieveMetaData());
+    var x = await Pdfservice.retrieveMetaData();
+    console.log(x);
+    res.end();
+})
+
+app.put('/api/updatePdf/', function (req, res) {
+    // needs to have id and data and new data inputted
+    req.on("data", function (data) {
+        form = query.parse(data.toString());
+        Pdfservice.updatePDFbyID(form.id, form.data, form.field)
+    });
+} )
+
 
 
 app.listen('3002');
