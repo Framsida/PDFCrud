@@ -31,7 +31,7 @@ module.exports = {
 
                 var gfs = Grid(conn.db);
                 var writestream = gfs.createWriteStream({
-                    filename: filename,
+                    filename: stuff.fileName,
                     metadata: {
                         author: stuff.author,
                         tags: stuff.tags,
@@ -40,6 +40,9 @@ module.exports = {
                 file.pipe(writestream);
             });
             
+        });
+        busboy.on('finish', function() {
+            console.log(stuff);
         });
 
         req.pipe(busboy);

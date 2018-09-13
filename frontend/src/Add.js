@@ -20,16 +20,13 @@ class AddModal extends React.Component {
             modal: !this.state.modal
         });
     }
-    fileChange(event) {
-        this.setState({ file: event.target.files[0] });
-    }
 
     postForm() {
         let formData = new FormData();
-        formData.append('file', this.uploadFile);
         formData.append('fileName', this.title);
         formData.append('author', this.author);
         formData.append('tags', this.tags);
+        formData.append('file', this.uploadFile);
         console.log(Object.values(formData));
 
         axios.post('http://localhost:3002/api/add', formData,
@@ -60,14 +57,14 @@ class AddModal extends React.Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="pdfFile">Choose a pdf</Label>
-                                <Input type="file" name="file" id="pdfFile" onChange={this.fileChange}/>
+                                <Input type="file" name="file" id="pdfFile" onChange={f => this.uploadFile = f.target.files[0]}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="pdfAuthor">Choose a pdf</Label>
+                                <Label for="pdfAuthor">Enter author</Label>
                                 <Input type="text" name="file" id="pdfAuthor" onChange={f => this.author = f.target.value}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="pdfAuthor">Choose a pdf</Label>
+                                <Label for="pdfAuthor">Enter tags</Label>
                                 <Input type="text" name="tags" id="pdfTags" onChange={f => this.tags = f.target.value}/>
                             </FormGroup>
                         </form>
