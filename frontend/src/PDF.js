@@ -3,17 +3,18 @@ import { Document, Page } from 'react-pdf';
 import {Modal,Button} from 'reactstrap'
 
 class PDF extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             modal: false,
-            numPages: 1,
+            numPages: null,
             pageNumber: 1
         };
         this.toggle = this.toggle.bind(this);
+        this.id=props.id
+        this.file = null;
     }
-
-
+    
     onDocumentLoad = ({ numPages }) => {
         this.setState({ numPages });
     }
@@ -24,6 +25,8 @@ class PDF extends Component {
         });
     }
 
+
+
     render() {
         const { pageNumber, numPages } = this.state;
 
@@ -33,7 +36,7 @@ class PDF extends Component {
             <Modal isOpen={this.state.modal} toggle={this.toggle}>
             <div>
                 <Document
-                    file="pdf-sample.pdf"
+                    file={`http://localhost:3002/api/viewFileWithID/${this.id}`}
                     onLoadSuccess={this.onDocumentLoad}>
                     <Page pageNumber={pageNumber} />
                 </Document>

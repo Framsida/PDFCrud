@@ -14,6 +14,7 @@ class DeleteModal extends React.Component {
 
         this.id = props.pdfId;
         this.title = props.title;
+        this.deletePDF = this.deletePDF.bind(this);
 
 
     }
@@ -25,8 +26,11 @@ class DeleteModal extends React.Component {
     }
 
     deletePDF() {
-        axios.delete('/api/delete', {
-            data: {id: this.id},
+        console.log(this.id);
+        axios.delete('http://localhost:3002/api/deleteFileWithID', {
+            data: {
+                id: this.id
+            },
             config: {
 
             }

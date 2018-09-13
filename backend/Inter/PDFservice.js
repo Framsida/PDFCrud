@@ -5,13 +5,48 @@ var Grid = require('gridfs-stream');
 var fs = require('fs');
 var pdfPath = path.join('test.pdf');
 const f = require('util').format;
+var Busboy = require('busboy');
+var query=require("querystring");
+var http = require('http'),
+    inspect = require('util').inspect;
+
 // Retrieve
 var MongoClient = require('mongodb').MongoClient;
 Grid.mongo = mongoose.mongo;
 
 module.exports = {
+    addToDatabaseButItWorksHopefully: function(req, res) {
+        mongoose.connect('mongodb://testing:testing1@ds151292.mlab.com:51292/devtesting');
+        console.log(req.body.tags);
+        var busboy = new Busboy({ headers: req.headers });
+        var conn = mongoose.connection;
+        var stuff = {};
+        busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+            stuff[fieldname] = val;
+            console.log('Field [' + fieldname + ']: value: ' + inspect(val));
+        });
+        console.log(stuff);
+        busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+            conn.once('open', function () {
+
+                var gfs = Grid(conn.db);
+                var writestream = gfs.createWriteStream({
+                    filename: filename,
+                    metadata: {
+                        author: stuff.author,
+                        tags: stuff.tags,
+                    }
+                });
+                file.pipe(writestream);
+            });
+            
+        });
+
+        req.pipe(busboy);
+    },
     addToDataBase: function (filename, file, author, tags) {
         mongoose.connect('mongodb://testing:testing1@ds151292.mlab.com:51292/devtesting');
+        console.log(file);
         var conn = mongoose.connection;
         conn.once('open', function () {
             var gfs = Grid(conn.db);

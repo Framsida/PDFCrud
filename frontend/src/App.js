@@ -6,7 +6,6 @@ import Delete from "./Delete";
 import Add from "./Add.js";
 import PDF from "./PDF.js";
 
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -16,11 +15,11 @@ class App extends Component {
     }
     buttonFormatter(cell, row){
         console.log(this.state);
-        return (<div><Edit title={row.Title} tags={row.Tags}>Edit</Edit><Delete title={row.Title}>Delete</Delete></div>);
+        return (<div><Edit title={row.Title} tags={row.Tags}>Edit</Edit><Delete title={row.Title} pdfId={row.id}>Delete</Delete></div>);
 
     }
-    PDFlink(){
-        return (<PDF>PDF</PDF>);
+    PDFlink(cell,row){
+        return (<div><PDF id={row.id}>PDF</PDF></div>);
     }
     createCustomInsertButton() {
         return (
@@ -28,10 +27,11 @@ class App extends Component {
         );
     }
     componentDidMount() {
-        fetch("http://demo5512929.mockable.io/something")
+        fetch(`http://localhost:3002/api/getDetails/`)
             .then(res => res.json())
             .then(
             (result) => {
+                console.log(result);
                 this.setState({
                     items:result.items
                 }
@@ -49,7 +49,7 @@ class App extends Component {
           insertBtn: this.createCustomInsertButton
       };
     return (
-        <BootstrapTable ref='table' options={options} hover={true}  data = {this.state.items} insertRow>
+        <BootstrapTable ref='table' options={options} hover={true} data = {this.state.items} insertRow>
                 <TableHeaderColumn width={"200"} dataField='Title' isKey>Title</TableHeaderColumn>
                 <TableHeaderColumn width={"200"} dataField='Data' dataFormat={this.PDFlink}>Data</TableHeaderColumn>
                 <TableHeaderColumn width={"200"} dataField='Tags'>Tags</TableHeaderColumn>
