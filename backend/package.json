@@ -24,6 +24,7 @@
     "busboy": "^0.2.14",
     "connect-busboy": "0.0.2",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "gridfs-stream": "^1.1.1",
     "mongodb": "^3.1.4",

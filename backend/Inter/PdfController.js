@@ -13,11 +13,13 @@ var http = require('http'),
 var bodyparser = require('body-parser');
 var multer = require('multer');
 var upload = multer({ storage: multer.memoryStorage() });
+var cors = require('cors');
 
 // Works Outside
 // NOTE : This works on my enviroment, bits and bobs must be changed to work with the front end
 
 app.use(bodyparser.json());
+app.use(cors());
 
 app.get('/', function(req, res){
     // for ash to test stuff do not need it
@@ -70,11 +72,9 @@ app.get('/api/getDetails/', async function (req, res) {
 })
 
 app.put('/api/updatePdf/', function (req, res) {
-    // needs to have id and data and new data inputted
-    req.on("data", function (data) {
-        form = query.parse(data.toString());
-        Pdfservice.updatePDFbyID(form.id, form.data, form.field)
-    });
+    console.log("hit the update");
+    console.log(req.body);
+    Pdfservice.updatePDFbyID(req.body.id, req.body.title, req.body.tags)
 } )
 
 
