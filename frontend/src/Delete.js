@@ -35,11 +35,11 @@ class DeleteModal extends React.Component {
             }
         })
             .then(function () {
-                console.log(this.state.items);
+                //console.log(this.state.items);
                 console.log("Success");
-                this.state.items.splice(0,1);
-                this.forceUpdate();
-                //this.toggle;
+                //this.state.items.splice(0,1);
+                //this.forceUpdate();
+                this.toggle;
             })
             .catch(e => {
                 console.log(e)
@@ -48,7 +48,7 @@ class DeleteModal extends React.Component {
         // here
         //var row = document.getElementById(rowid);
         //row.parentNode.removeChild(row);
-        // window.location.reload();
+        window.location.reload();
     }
 
     render() {
