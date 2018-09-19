@@ -41,6 +41,7 @@ class AddModal extends React.Component {
             .catch(function() {
                 console.log('It failed');
             });
+        window.location.reload();
     }
 
     render() {

@@ -26,7 +26,6 @@ class DeleteModal extends React.Component {
     }
 
     deletePDF() {
-        console.log(this.id);
         axios.delete('http://localhost:3002/api/deleteFileWithID', {
             data: {
                 id: this.id
@@ -36,12 +35,20 @@ class DeleteModal extends React.Component {
             }
         })
             .then(function () {
+                console.log(this.state.items);
                 console.log("Success");
+                this.state.items.splice(0,1);
+                this.forceUpdate();
                 //this.toggle;
             })
             .catch(e => {
                 console.log(e)
             })
+
+        // here
+        //var row = document.getElementById(rowid);
+        //row.parentNode.removeChild(row);
+        // window.location.reload();
     }
 
     render() {

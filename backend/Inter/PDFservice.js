@@ -106,13 +106,11 @@ module.exports = {
         });
     },
     updatePDFbyID: function (id, title, tags){
-        console.log(title);
-        console.log(tags);        console.log(mongoose.mongo.ObjectId(id));
 
         mongoose.connect('mongodb://testing:testing1@ds151292.mlab.com:51292/devtesting');
         var conn = mongoose.connection;
         conn.once('open', async function () {
-            await conn.collection("fs.files").update({"_id": mongoose.mongo.ObjectId(id)}, {'$set': {"title": title, "tags" : tags}});
+            await conn.collection("fs.files").updateOne({"_id": mongoose.mongo.ObjectId(id)}, {'$set': {"filename": title, "metadata.tags" : tags}});
         });
     }
 }

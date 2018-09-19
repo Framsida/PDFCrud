@@ -9,9 +9,11 @@ class EditModal  extends  React.Component {
             modal: false
         };
         this.toggle = this.toggle.bind(this);
+        this.postForm = this.postForm.bind(this);
 
         this.title = props.title;
         this.tags = props.tags;
+
         this.id = props.pdfId;
 
     }
@@ -23,15 +25,13 @@ class EditModal  extends  React.Component {
     }
 
     postForm() {
-        console.log(this.id);
-        console.log(this.title);
-        console.log(this.tags);
         axios({
             method: 'put',
             url: 'http://localhost:3002/api/updatePdf/',
             data: {id: this.id, title: this.title, tags: this.tags},
             config: {headers: {'Content-Type': 'multipart/form-data'}}
         })
+        window.location.reload();
     }
 
 

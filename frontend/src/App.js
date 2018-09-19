@@ -15,7 +15,10 @@ class App extends Component {
     }
     buttonFormatter(cell, row){
         console.log(this.state);
-        return (<div><Edit title={row.Title} tags={row.Tags}>Edit</Edit><Delete title={row.Title} pdfId={row.id}>Delete</Delete></div>);
+        console.log(row);
+        // ** SEB NOTE:  TRY PUTTING THE STATE IN AS A PROP AND USING THAT TO EDIT THE STATE FROM OTHER COMPONENTS
+
+        return (<div><Edit title={row.Title} tags={row.Tags} pdfId={row.id}>Edit</Edit><Delete title={row.Title} pdfId={row.id}>Delete</Delete></div>);
 
     }
     PDFlink(cell,row){
@@ -54,8 +57,9 @@ class App extends Component {
                 <TableHeaderColumn width={"200"} dataField='Data' dataFormat={this.PDFlink}>Data</TableHeaderColumn>
                 <TableHeaderColumn width={"200"} dataField='Tags'>Tags</TableHeaderColumn>
                 <TableHeaderColumn width={"200"} dataField='Date'>DateAdded</TableHeaderColumn>
-                <TableHeaderColumn width={"200"} dataField="button" dataFormat={this.buttonFormatter}>Buttons</TableHeaderColumn>
+                <TableHeaderColumn width={"200"} dataField="button" dataFormat={this.buttonFormatter}>Buttons<button onClick={() => {this.state.items.splice(0,1); this.forceUpdate()}}></button></TableHeaderColumn>
         </BootstrapTable>
+
     );
   }
 }

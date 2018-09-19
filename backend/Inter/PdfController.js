@@ -18,7 +18,7 @@ var cors = require('cors');
 // Works Outside
 // NOTE : This works on my enviroment, bits and bobs must be changed to work with the front end
 
-app.use(bodyparser.json());
+app.use(bodyparser());
 app.use(cors());
 
 app.get('/', function(req, res){
@@ -72,8 +72,6 @@ app.get('/api/getDetails/', async function (req, res) {
 })
 
 app.put('/api/updatePdf/', function (req, res) {
-    console.log("hit the update");
-    console.log(req.body);
     Pdfservice.updatePDFbyID(req.body.id, req.body.title, req.body.tags)
 } )
 
